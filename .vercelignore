@@ -35,3 +35,9 @@ Thumbs.db
 .env
 .env.local
 
+# Model files (too large for serverless function)
+models/
+*.pth
+*.pkl
+
+
