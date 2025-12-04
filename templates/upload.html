@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>건강 데이터 업로드 - AI 손길</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header class="main-header">
+            <div class="header-content">
+                <h1 class="logo">AI 손길</h1>
+                <p class="subtitle">건강 데이터 실시간 모니터링 및 이상 감지 시스템</p>
+            </div>
+            <nav class="main-nav">
+                <a href="/" class="nav-link">홈</a>
+                <a href="/upload" class="nav-link active">건강 데이터 업로드</a>
+                <a href="/history" class="nav-link">내 데이터 조회</a>
+            </nav>
+        </header>
+
+        <main>
+            <!-- 사용자 정보 섹션 -->
+            <section class="user-section">
+                <h2 class="section-title">
+                    <span class="icon">👤</span>
+                    사용자 정보
+                </h2>
+                <div class="user-input-group" style="display: flex; align-items: flex-start; gap: 15px; flex-wrap: nowrap;">
+                    <div class="input-wrapper" style="flex: 1; min-width: 0;">
+                        <label for="user-id">사용자 ID <span class="required">*</span></label>
+                        <input type="text" id="user-id" placeholder="사용자 ID를 입력하세요" value="" oninput="validateUserId()" onkeypress="handleUserIdKeyPress(event)" style="width: 100%;">
+                        <div id="user-id-status" class="input-status"></div>
+                    </div>
+                    <div style="display: flex; flex-direction: column; justify-content: flex-start; padding-top: 35px;">
+                        <button onclick="loadUserData()" class="btn-primary btn-icon" id="load-data-btn" disabled style="white-space: nowrap; padding: 12px 24px;">
+                            <span>🔍</span>
+                            데이터 조회
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 건강 데이터 파일 업로드 섹션 -->
+            <section class="upload-section">
+                <h2 class="section-title">
+                    <span class="icon">📁</span>
+                    건강 데이터 파일 업로드
+                </h2>
+                <div class="upload-guide">
+                    <div class="guide-step">
+                        <span class="step-number">1</span>
+                        <span class="step-text">건강 앱에서 데이터 내보내기 → XML/JSON 파일 다운로드</span>
+                    </div>
+                    <div class="guide-step">
+                        <span class="step-number">2</span>
+                        <span class="step-text">아래에서 파일 선택 후 업로드 버튼 클릭</span>
+                    </div>
+                    <div class="guide-step">
+                        <span class="step-number">3</span>
+                        <span class="step-text">자동으로 분석됩니다!</span>
+                    </div>
+                </div>
+                <div class="upload-controls">
+                    <div class="file-input-wrapper">
+                        <input type="file" id="health-file-input" accept=".json,.csv,.xml">
+                        <label for="health-file-input" class="file-label">
+                            <span class="file-icon">📄</span>
+                            <span class="file-text">파일 선택</span>
+                        </label>
+                    </div>
+                    <button onclick="uploadHealthFile()" class="btn-primary btn-icon" id="upload-btn" disabled>
+                        <span>⬆️</span>
+                        업로드
+                    </button>
+                </div>
+                <div id="upload-status" class="upload-status"></div>
+            </section>
+
+            <!-- 결과 표시 섹션 -->
+            <section class="result-section" id="result-section" style="display: none;">
+                <h2 class="section-title">
+                    <span class="icon">📊</span>
+                    분석 결과
+                </h2>
+                <div id="upload-result" class="result-container"></div>
+                <div id="save-button-container" style="margin-top: 20px; text-align: center; display: none;">
+                    <button onclick="saveUploadedData()" class="btn-primary btn-large" id="save-uploaded-data-btn" style="padding: 12px 30px; font-size: 16px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                        <span style="margin-right: 8px;">💾</span>
+                        분석 결과 저장하기
+                    </button>
+                </div>
+            </section>
+
+            <!-- 챗봇 섹션 -->
+            <section class="chatbot-section">
+                <h2 class="section-title">
+                    <span class="icon">💬</span>
+                    건강관리 챗봇
+                </h2>
+                <div class="chat-container">
+                    <div id="chat-messages" class="chat-messages"></div>
+                    <div class="chat-input">
+                        <input type="text" id="chat-input" placeholder="건강 관련 질문을 입력하세요..." onkeypress="handleChatKeyPress(event)">
+                        <button onclick="sendChatMessage()" id="chat-send-btn">전송</button>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/upload.js') }}"></script>
+</body>
+</html>
+

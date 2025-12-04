@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>데이터 조회 - AI 손길</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header class="main-header">
+            <div class="header-content">
+                <h1 class="logo">AI 손길</h1>
+                <p class="subtitle">건강 데이터 실시간 모니터링 및 이상 감지 시스템</p>
+            </div>
+            <nav class="main-nav">
+                <a href="/" class="nav-link">홈</a>
+                <a href="/upload" class="nav-link">건강 데이터 업로드</a>
+                <a href="/history" class="nav-link active">내 데이터 조회</a>
+            </nav>
+        </header>
+
+        <main>
+            <!-- 사용자 정보 섹션 -->
+            <section class="user-section">
+                <h2 class="section-title">
+                    <span class="icon">👤</span>
+                    사용자 정보
+                </h2>
+                <div class="user-input-group" style="display: flex; align-items: flex-start; gap: 15px; flex-wrap: nowrap;">
+                    <div class="input-wrapper" style="flex: 1; min-width: 0;">
+                        <label for="user-id">사용자 ID <span class="required">*</span></label>
+                        <input type="text" id="user-id" placeholder="사용자 ID를 입력하세요" value="" oninput="validateUserId()" onkeypress="handleUserIdKeyPress(event)" style="width: 100%;">
+                        <div id="user-id-status" class="input-status"></div>
+                    </div>
+                    <div style="display: flex; flex-direction: column; justify-content: flex-start; padding-top: 35px;">
+                        <button onclick="loadUserHistory()" class="btn-primary btn-icon" id="load-data-btn" disabled style="white-space: nowrap; padding: 12px 24px;">
+                            <span>🔍</span>
+                            데이터 조회
+                        </button>
+                    </div>
+                </div>
+                <div id="user-stats" class="stats-container"></div>
+            </section>
+
+            <!-- 통계 섹션 -->
+            <section class="stats-section" id="stats-section" style="display: none;">
+                <h2 class="section-title">
+                    <span class="icon">📊</span>
+                    통계 정보
+                </h2>
+                <div id="statistics-content" class="stats-container"></div>
+            </section>
+
+            <!-- 시각화 섹션 -->
+            <section class="visualization-section" id="visualization-section" style="display: none;">
+                <h2 class="section-title">
+                    <span class="icon">📈</span>
+                    데이터 시각화
+                </h2>
+                <div id="chart-container" class="chart-container">
+                    <div id="timeseries-chart"></div>
+                    <div id="anomaly-chart"></div>
+                </div>
+            </section>
+
+            <!-- 데이터 목록 섹션 -->
+            <section class="data-list-section" id="data-list-section" style="display: none;">
+                <h2 class="section-title">
+                    <span class="icon">📋</span>
+                    저장된 데이터 목록
+                </h2>
+                <div id="data-list" class="data-list-container"></div>
+            </section>
+        </main>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/history.js') }}"></script>
+</body>
+</html>
+
