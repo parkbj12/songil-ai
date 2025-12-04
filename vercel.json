@@ -1,5 +1,11 @@
 {
   "version": 2,
+  "builds": [
+    {
+      "src": "app.py",
+      "use": "@vercel/python"
+    }
+  ],
   "routes": [
     {
       "src": "/(.*)",
@@ -9,13 +15,11 @@
   "env": {
     "FLASK_APP": "app.py",
     "PYTHON_VERSION": "3.12"
-  },
-  "functions": {
-    "app.py": {
-      "maxDuration": 30
-    }
   }
 }
+
+
+
 
 
 
