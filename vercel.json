@@ -1,11 +1,5 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "app.py",
-      "use": "@vercel/python"
-    }
-  ],
   "routes": [
     {
       "src": "/(.*)",
@@ -18,8 +12,10 @@
   },
   "functions": {
     "app.py": {
+      "runtime": "python3.12",
       "maxDuration": 30
     }
   }
 }
+
 
