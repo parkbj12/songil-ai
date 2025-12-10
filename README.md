@@ -53,45 +53,41 @@ AI Hub의 '치매 고위험군 웨어러블 라이프로그 데이터셋'을 활
 ## 🏗️ 프로젝트 구조
 
 ```
-wearable-anomaly-detection/
+songil-ai-main/
 ├── app.py                 # Flask 메인 애플리케이션 (REST API)
-├── config.py             # 설정 파일 (환경 변수, 하이퍼파라미터)
-├── model.py              # LSTM Autoencoder 모델 정의
-├── data_processor.py     # 데이터 처리 및 전처리
-├── anomaly_detector.py   # 이상 탐지 로직
-├── database.py           # MongoDB 연동 모듈
-├── chatbot.py            # AI 챗봇 모듈 (OpenAI GPT)
-├── notification.py       # 이메일 알림 시스템
-├── scheduler.py          # 건강 상태 체크 스케줄러
-├── train.py              # 모델 학습 스크립트
-├── requirements.txt      # 패키지 의존성
-├── .env                  # 환경 변수 (로컬 개발용)
-├── env.example           # 환경 변수 예시 파일
-├── Procfile              # Railway/Heroku 배포 설정
-├── railway.json          # Railway 배포 설정
-├── runtime.txt           # Python 버전 지정
-├── templates/            # HTML 템플릿
-│   ├── index.html        # 메인 대시보드
-│   ├── upload.html       # 파일 업로드 페이지
-│   └── history.html      # 데이터 이력 페이지
-├── static/               # 정적 파일
+├── config.py              # 설정 파일 (환경 변수, 하이퍼파라미터)
+├── model.py               # LSTM Autoencoder 모델 정의
+├── data_processor.py      # 데이터 처리 및 전처리
+├── anomaly_detector.py    # 이상 탐지 로직
+├── database.py            # MongoDB 연동 모듈
+├── chatbot.py             # AI 챗봇 모듈 (OpenAI GPT)
+├── notification.py        # 이메일 알림 시스템
+├── scheduler.py           # 건강 상태 체크 스케줄러
+├── requirements.txt       # 패키지 의존성
+├── Procfile               # Railway/Heroku 배포 설정
+├── sample_health_data.xml # 샘플 건강 데이터 파일
+├── templates/             # HTML 템플릿
+│   ├── index.html         # 메인 대시보드
+│   ├── upload.html        # 파일 업로드 페이지
+│   └── history.html       # 데이터 이력 페이지
+├── static/                # 정적 파일
 │   ├── css/
-│   │   └── style.css     # 스타일시트
+│   │   └── style.css      # 스타일시트
 │   └── js/
-│       ├── main.js       # 메인 JavaScript
-│       ├── upload.js     # 업로드 기능
-│       └── history.js    # 이력 조회 기능
-└── models/               # 학습된 모델 파일
+│       ├── main.js        # 메인 JavaScript
+│       ├── upload.js      # 업로드 기능
+│       └── history.js     # 이력 조회 기능
+└── models/                # 학습된 모델 파일
     ├── lstm_autoencoder.pth  # LSTM 모델 가중치
-    └── scaler.pkl        # 데이터 정규화 스케일러
+    └── scaler.pkl         # 데이터 정규화 스케일러
 ```
 
 ## 🚀 설치 방법
 
 ### 1. 저장소 클론
 ```bash
-git clone https://github.com/your-username/wearable-anomaly-detection.git
-cd wearable-anomaly-detection
+git clone https://github.com/your-username/songil-ai.git
+cd songil-ai-main
 ```
 
 ### 2. 가상환경 생성 및 활성화
@@ -112,11 +108,7 @@ pip install -r requirements.txt
 
 ### 4. 환경 변수 설정
 
-`.env.example` 파일을 복사하여 `.env` 파일을 생성하고 실제 값으로 수정하세요:
-
-```bash
-cp .env.example .env
-```
+프로젝트 루트에 `.env` 파일을 생성하고 아래 내용을 참고하여 설정하세요:
 
 `.env` 파일 내용:
 ```env
@@ -143,7 +135,7 @@ SENDER_PASSWORD=your-app-password
 - `lstm_autoencoder.pth`: 학습된 LSTM 모델
 - `scaler.pkl`: 데이터 정규화 스케일러
 
-모델 파일이 없다면 `train.py`를 실행하여 모델을 학습하세요.
+모델 파일은 이미 학습되어 포함되어 있습니다.
 
 ### 6. 서버 실행
 
@@ -187,15 +179,11 @@ http://localhost:5000
 #### 방법 3: HealthKit API 연동
 - `/sync_healthkit` 엔드포인트를 통해 아이폰 HealthKit 데이터 자동 동기화
 
-### 2. 모델 학습 (선택사항)
+### 2. 모델 정보
 
-새로운 데이터로 모델을 재학습하려면:
-
-```bash
-python train.py
-```
-
-학습된 모델은 `models/` 디렉토리에 자동 저장됩니다.
+모델은 이미 학습되어 `models/` 디렉토리에 저장되어 있습니다:
+- `lstm_autoencoder.pth`: LSTM Autoencoder 모델 가중치
+- `scaler.pkl`: 데이터 정규화 스케일러
 
 ### 3. 챗봇 사용
 
@@ -301,20 +289,17 @@ python train.py
 
 ## 🚢 배포
 
-### Railway 배포
-
-자세한 배포 가이드는 [RAILWAY_DEPLOY.md](./RAILWAY_DEPLOY.md)를 참고하세요.
+### Railway/Heroku 배포
 
 **간단한 배포 단계:**
-1. Railway 계정 생성 및 프로젝트 생성
+1. Railway 또는 Heroku 계정 생성 및 프로젝트 생성
 2. GitHub 저장소 연결
 3. 환경 변수 설정 (MongoDB URI, OpenAI API Key 등)
-4. 자동 배포 완료!
+4. `Procfile`이 이미 포함되어 있어 자동 배포 완료!
 
 ### 다른 플랫폼 배포
 
 - **Heroku**: `Procfile` 사용
-- **Vercel**: `vercel.json` 설정 파일 참고
 - **Docker**: Dockerfile 생성 필요
 
 ## 🔧 설정
@@ -323,7 +308,7 @@ python train.py
 
 ```python
 MODEL_CONFIG = {
-    "input_size": 23,          # 센서 데이터 특징 수
+    "input_size": 5,            # 센서 데이터 특징 수 (heart_rate, steps, sleep, temperature, activity)
     "hidden_size": 64,          # LSTM hidden 크기
     "num_layers": 2,            # LSTM 레이어 수
     "dropout": 0.2,             # Dropout 비율
@@ -369,18 +354,12 @@ ANOMALY_CONFIG = {
 - 보호자/가족에게 자동 알림 발송
 - 응급 상황 대응 프로토콜 실행
 
-## 🤖 모델 파인튜닝
+## 🤖 모델 정보
 
-### 개인화된 모델 학습
-- 사용자별 개인화된 모델을 학습하기 위해 `train.py`에서 사용자 ID별로 모델을 학습할 수 있습니다.
-- 전이학습(Transfer Learning) 방식으로 전체 데이터로 사전 학습 후, 개인별 데이터로 파인튜닝할 수 있습니다.
-
-### 모델 재학습
-```bash
-python train.py
-```
-
-새로운 데이터가 추가되면 주기적으로 모델을 재학습하여 성능을 개선할 수 있습니다.
+### LSTM Autoencoder 모델
+- 사전 학습된 LSTM Autoencoder 모델이 `models/` 디렉토리에 포함되어 있습니다.
+- 모델은 AI Hub의 '치매 고위험군 웨어러블 라이프로그 데이터셋'을 기반으로 학습되었습니다.
+- Reconstruction Error 기반으로 이상 징후를 감지합니다.
 
 ## 🐛 트러블슈팅
 
@@ -390,8 +369,8 @@ python train.py
 - **인증 실패**: MongoDB URI의 사용자명과 비밀번호가 올바른지 확인하세요. 특수문자는 URL 인코딩이 필요할 수 있습니다.
 
 ### 모델 로드 실패
-- `models/` 디렉토리에 모델 파일이 있는지 확인하세요.
-- 모델 파일이 없다면 `train.py`를 실행하여 모델을 학습하세요.
+- `models/` 디렉토리에 모델 파일(`lstm_autoencoder.pth`, `scaler.pkl`)이 있는지 확인하세요.
+- 모델 파일은 저장소에 포함되어 있어야 합니다.
 
 ### OpenAI API 오류
 - API 키가 올바른지 확인하세요.
@@ -416,3 +395,4 @@ python train.py
 프로젝트에 대한 문의사항이 있으시면 이슈를 생성해주세요.
 
 ---
+
