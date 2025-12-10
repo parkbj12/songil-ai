@@ -18,7 +18,7 @@ OPENAI_MODEL = "gpt-3.5-turbo"
 
 # 모델 하이퍼파라미터
 MODEL_CONFIG = {
-    "input_size": 23,  # 센서 데이터 특징 수 (자동으로 계산됨, train.py에서 업데이트)
+    "input_size": 5,  # 센서 데이터 특징 수 (heart_rate, steps, sleep, temperature, activity)
     "hidden_size": 64,
     "num_layers": 2,
     "dropout": 0.2,
@@ -101,4 +101,5 @@ TRAIN_MMSE_PATH = os.path.join(DATA_TRAIN_PATH, "3.인지기능/train_mmse.csv")
 VAL_ACTIVITY_PATH = os.path.join(DATA_VAL_PATH, "1.걸음걸이/val_activity.csv")
 VAL_SLEEP_PATH = os.path.join(DATA_VAL_PATH, "2.수면/val_sleep.csv")
 VAL_MMSE_PATH = os.path.join(DATA_VAL_PATH, "3.인지기능/val_mmse.csv")
+
 
